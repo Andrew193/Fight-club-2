@@ -18,6 +18,11 @@ const createUserValid = (req, res, next) => {
 
 const updateUserValid = (req, res, next) => {
     // TODO: Implement validatior for user entity during update
+    const Names=Object.keys(user),act=Object.keys(req.body)
+    act.forEach((value)=>{
+        if(!Names.includes(value))
+        next({ error: true, message: "Remove unnecessary fields in the request body" })
+    })
     let errors = { error: true, message: "" }
     if (Object.values(req.body).length === 0) {
         next({ error: true, message: "Request body empty" });

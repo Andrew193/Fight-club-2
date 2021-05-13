@@ -33,6 +33,7 @@ router.get("/:id", (req, res, next) => {
         res.data={error:true,message:"Empty storage or not found"};
     else
     res.data = [fighter];
+    
     responseMiddleware(null, req, res, next);
 })
 router.delete("/:id", (req, res, next) => {
