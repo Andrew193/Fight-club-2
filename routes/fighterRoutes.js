@@ -6,16 +6,16 @@ const { createFighterValid, updateFighterValid } = require('../middlewares/fight
 const router = Router();
 router.get("/", (req, res, next) => {
     const fighters = FighterService.getFighters();
-    if(fighters.length===0) 
-    res.data={error:true,message:"Empty storage or not found"};
+    if (fighters.length === 0)
+        res.data = { error: true, message: "Empty storage or not found" };
     else
-    res.data = fighters;
+        res.data = fighters;
     responseMiddleware(null, req, res, next);
 })
 router.post("/", createFighterValid, responseMiddleware, (req, res) => {
     if (!res.error) {
-        req.body.name=req.body.name.toLowerCase()
-        if (FighterService.search(req.body.name)==undefined) {
+        req.body.name = req.body.name.toLowerCase()
+        if (FighterService.search(req.body.name) == undefined) {
             req.body.health = 100;
             const newFighter = FighterService.createFighter(req.body);
             res.status(200);
@@ -29,20 +29,23 @@ router.post("/", createFighterValid, responseMiddleware, (req, res) => {
 
 router.get("/:id", (req, res, next) => {
     const fighter = FighterService.getFighter(req.params.id);
-    if(fighter===undefined || fighter===null)
-        res.data={error:true,message:"Empty storage or not found"};
-    else
-    res.data = [fighter];
-    
-    responseMiddleware(null, req, res, next);
+    if (fighter === undefined || fighter === null) {
+        res.data = { error: true, message: "Empty storage or not found" };
+        responseMiddleware(null, req, res, next);
+    } else {
+        res.status(200);
+        res.json(fighter);
+    }
 })
 router.delete("/:id", (req, res, next) => {
     const deletedFighter = FighterService.deleteFighter(req.params.id);
-    if(deletedFighter.length===0)
-    res.data={error:true,message:"User does not exist"};
-    else
-    res.data = deletedFighter;
-    responseMiddleware(null, req, res, next);
+    if (deletedFighter.length === 0) {
+        res.data = { error: true, message: "User does not exist" };
+        responseMiddleware(null, req, res, next);
+    } else {
+        res.status(200);
+        res.json(deletedFighter[0])
+    }
 })
 router.put("/:id", updateFighterValid, responseMiddleware, (req, res, next) => {
     if (!res.error) {

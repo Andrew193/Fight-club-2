@@ -20,34 +20,43 @@ router.post("/", createUserValid, responseMiddleware, (req, res) => {
 router.get("/", (req, res, next) => {
     const allUsers = UserService.getAll();
     if (allUsers.length === 0)
-        res.data = { error: true, message: "Empty storage or not found" };
+        res.data = { error: true, message: "Empty storage" };
     else
         res.data = allUsers;
     responseMiddleware(null, req, res, next);
 })
 router.get("/:id", (req, res, next) => {
     const user = UserService.searchOne(req.params.id);
-    if (user === undefined || user === null)
+    if (user === undefined || user === null) {
         res.data = { error: true, message: "Empty storage or not found" };
-    else
-        res.data = [user];
-    responseMiddleware(null, req, res, next);
+        responseMiddleware(null, req, res, next);
+    }
+    else {
+        res.status(200)
+        res.json(user);
+    }
 })
 router.delete("/:id", (req, res, next) => {
     const user = UserService.delete(req.params.id)
-    user.length > 0 ? res.data = [{ message: "User deleted" }, user] : res.data = { message: "Already deleted or does not exist" }
-    responseMiddleware(null, req, res, next)
+    if (user.length > 0) {
+        res.status(200)
+        res.json(user[0])
+    } else {
+        res.data = { message: "Already deleted or does not exist" }
+        responseMiddleware(null, req, res, next)
+    }
 })
 router.put("/:id", updateUserValid, responseMiddleware, (req, res, next) => {
     if (!res.error) {
         const user = UserService.searchOne(req.params.id);
-        if (user === undefined || user === null || UserService.searchBy(req.body)!=undefined)
+        if (user === undefined || user === null || UserService.searchBy(req.body) != undefined) {
             res.data = { error: true, message: "No such user found or cannot be changed" };
-        else {
+            responseMiddleware(null, req, res, next);
+        } else {
             const updateUse = UserService.change(req.params.id, req.body);
-            res.data = [updateUse];
+            res.status(200)
+            res.json(updateUse);
         }
-        responseMiddleware(null, req, res, next);
     }
 })
 // TODO: Implement route controllers for user
