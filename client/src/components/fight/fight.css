@@ -1,0 +1,54 @@
+#wrapper {
+    margin-top: 2rem;
+}
+
+#figh-wrapper {
+    width: 70%;
+    margin: 2rem auto;
+    border: 1px solid rgba(0,0,0,0.1);
+    display: flex;
+}
+
+#figh-wrapper > *:first-child, #figh-wrapper > *:last-child {
+    flex: 1;
+}
+
+.btn-wrapper {
+    margin: 0 1rem;
+    display: flex;
+    align-items: flex-start;
+    padding-top: 1rem;
+    justify-content: center;
+}
+
+.contFight{
+    display: flex;
+    justify-content:space-around;
+}
+
+.left-fighter-indicator{
+    background-color: rgb(0, 255, 21);
+    width: 100%
+}
+
+.right-fighter-indicator{
+    width: 100%;
+    background-color:rgb(0, 255, 21);
+}
+.arena___left-fighter {
+    text-align: center;
+    background-color: #a7e0e0;
+    height: 250px;
+    width: 20%;
+}
+
+.arena___right-fighter {
+    text-align: center;
+    background-color: #a7e0e0;
+    height: 250px;
+    width: 20%;
+}
+
+.arena___attack{
+    margin-left: -10%;
+}
