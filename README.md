@@ -80,3 +80,5 @@ ___
 * Юзеров с одиниковыми "phoneNumber"
 * Бойцов с одинаковыми "name"  
 (все поля case insensitive)
+
+Основано на [клик](https://github.com/DmitrijDN/nodejs-hometask-boilerpalte)
